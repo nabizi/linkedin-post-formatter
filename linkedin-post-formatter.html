@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta
+      name="description"
+      content="The all-in-one, AI-powered LinkedIn tool. Leverage AI to create content, schedule all your posts in a few clicks, engage with relevant accounts and measure your results. Join the movement."
+    />
+    <meta
+      content="Blabigo - Grow Your Personal Brand on LinkedIn"
+      property="og:title"
+    />
+    <meta
+      content="The all-in-one, AI-powered LinkedIn tool. Leverage AI to create content, schedule all your posts in a few clicks, engage with relevant accounts and measure your results. Join the movement."
+      property="og:description"
+    />
+    <meta
+      content="https://ai.blabigo.com/assets/preview.png"
+      property="og:image"
+    />
+    <meta
+      content="Blabigo - Grow Your Personal Brand on LinkedIn"
+      property="twitter:title"
+    />
+    <meta
+      content="The all-in-one, AI-powered LinkedIn tool. Leverage AI to create content, schedule all your posts in a few clicks, engage with relevant accounts and measure your results. Join the movement."
+      property="twitter:description"
+    />
+    <meta
+      content="https://ai.blabigo.com/assets/preview.png"
+      property="twitter:image"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      name="linked:image"
+      content="https://ai.blabigo.com/assets/preview.png"
+    />
+    <meta content="summary_large_image" name="twitter:card" />
+    <meta name="author" content="Blabigo" />
+    <script src="js/toUnicodeVariant.min.js"></script>
+    <title>LinkedIn Post Formatter - Free LinkedIn Post Formatter, by Blabigo</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Custom Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Bootstrap icons-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body class="d-flex flex-column h-100">
+
+    <script>
+            function updateText(variant, flag) {
+              var el = document.getElementById("linkedin-post-editor");
+              replaceSelectedText(
+                el,
+                toUnicodeVariant(getSeledtedText(), variant, flag)
+              );
+              gtag('event', 'Text Formatted (Free)', {
+                    'variant': variant,
+                    'flag': flag
+              });
+            }
+
+            function getInputSelection(el) {
+              var start = 0,
+                end = 0,
+                normalizedValue,
+                range,
+                textInputRange,
+                len,
+                endRange;
+
+              if (
+                typeof el.selectionStart == "number" &&
+                typeof el.selectionEnd == "number"
+              ) {
+                start = el.selectionStart;
+                end = el.selectionEnd;
+              } else {
+                range = document.selection.createRange();
+
+                if (range && range.parentElement() == el) {
+                  len = el.value.length;
+                  normalizedValue = el.value.replace(/\r\n/g, "\n");
+
+                  // Create a working TextRange that lives only in the input
+                  textInputRange = el.createTextRange();
+                  textInputRange.moveToBookmark(range.getBookmark());
+
+                  // Check if the start and end of the selection are at the very end
+                  // of the input, since moveStart/moveEnd doesn't return what we want
+                  // in those cases
+                  endRange = el.createTextRange();
+                  endRange.collapse(false);
+
+                  if (
+                    textInputRange.compareEndPoints("StartToEnd", endRange) > -1
+                  ) {
+                    start = end = len;
+                  } else {
+                    start = -textInputRange.moveStart("character", -len);
+                    start +=
+                      normalizedValue.slice(0, start).split("\n").length - 1;
+
+                    if (
+                      textInputRange.compareEndPoints("EndToEnd", endRange) > -1
+                    ) {
+                      end = len;
+                    } else {
+                      end = -textInputRange.moveEnd("character", -len);
+                      end +=
+                        normalizedValue.slice(0, end).split("\n").length - 1;
+                    }
+                  }
+                }
+              }
+
+              return {
+                start: start,
+                end: end,
+              };
+            }
+
+            function replaceSelectedText(el, text) {
+              var sel = getInputSelection(el),
+                val = el.value;
+              el.value = val.slice(0, sel.start) + text + val.slice(sel.end);
+            }
+
+            function getSeledtedText() {
+              var textComponent = document.getElementById(
+                "linkedin-post-editor"
+              );
+              var selectedText;
+
+              if (textComponent.selectionStart !== undefined) {
+                // Standards-compliant version
+                var startPos = textComponent.selectionStart;
+                var endPos = textComponent.selectionEnd;
+                selectedText = textComponent.value.substring(startPos, endPos);
+              } else if (document.selection !== undefined) {
+                // Internet Explorer version
+                textComponent.focus();
+                var sel = document.selection.createRange();
+                selectedText = sel.text;
+              }
+
+              return selectedText;
+            }
+
+            function copyToClipboard() {
+                // Get the text field
+                var copyText = document.getElementById("linkedin-post-editor");
+
+                // Select the text field
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); // For mobile devices
+
+                // Copy the text inside the text field
+                navigator.clipboard.writeText(copyText.value);
+                const box = document.getElementById('success-float');
+                box.style.visibility = 'visible';
+                console.log("should be visible");
+                setTimeout(() => {
+                    const box = document.getElementById('success-float');
+                    // 👇️ removes element from DOM
+                    //box.style.display = 'none';
+                    // 👇️ hides element (still takes up space on page)
+                    box.style.visibility = 'hidden';
+                    console.log("should be invisible");
+                    }, 3000); // 👈️ time in milliseconds
+                    gtag('event', 'Copy to Clipboard - Text Formatter (Free)');
+            }
+          </script>
+    <main class="flex-shrink-0">
+      <!-- Navigation-->
+      <nav class="navbar navbar-expand-lg navbar-light bg-white py-3">
+        <div class="container px-5">
+          
+          <!--<a class="navbar-brand" href="index.html"><h2 class="display-10 fw-bolder"><span class="text-gradient d-inline">Blabigo</span></h2></a>-->
+          <a class="navbar-brand" href="https://blabigo.com"
+            ><span class="fw-bolder text-primary">Blabigo</span></a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+              <!-- <li class="nav-item"><a class="nav-link" href="index.html"><span class="fw-bolder text-primary">Home</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="resume.html"><span class="fw-bolder text-primary">Resume</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="projects.html"><span class="fw-bolder text-primary">Projects</span></a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html"><span class="fw-bolder text-primary">Contact</span></a></li>-->
+              <a
+                style="margin-right: 20px"
+                class="btn px-2 py-1"
+                href="https://app.blabigo.com?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001"
+              >
+                Login
+              </a>
+              <a
+                class="btn btn-primary px-2 py-1"
+                href="https://app.blabigo.com/signup?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001"
+              >
+                <div class="d-inline-block bi bi-rocket-takeoff me-2"></div>
+                Start for free
+              </a>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- Header-->
+      <header class="py-5">
+        <div class="container px-5">
+          <div class="row gx-5 align-items-center">
+            <div class="col-xxl-10">
+              <!-- Header text content-->
+              <div class="text-center text-xxl-start">
+                <h1 class="display-3 fw-bolder mb-5">
+                  <span class="text-gradient d-inline"
+                    >LinkedIn Text Formatter</span
+                  >
+                </h1>
+                <h2>
+                  Format your LinkedIn post with bold, strikethrough, italic
+                  text styles and more!
+                </h2>
+                <br>
+                <h5>
+                  brought to you for free by
+                  <a href="https://ai.blabigo.com?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001">Blabigo</a>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <div style="display: flex;
+      justify-content: center;"><hr style="text-align: center;width: 20%;"></hr></div>
+      <section class="bg-light py-0">
+        <div class="container px-5">
+          <div class="row gx-5 justify-content-center">
+            <div class="">
+              <div class="text-center my-5">
+                <div class="text-center text-xxl-start">
+                    <div style="width: 100%; text-align: -webkit-center;" >
+                        <div class="alert alert-success" style="text-align: center; width: 30%; visibility: hidden;" id="success-float" role="alert">
+                          Copied to clipboard.
+                        </div>
+                        <textarea
+                    style="width: 50%; height: 200px; "
+                    id="linkedin-post-editor"
+                    name="linkedin-post-editor"
+                    rows="4"
+                    cols="50"
+                  ></textarea>
+                  <br />
+                  <a
+                    style="margin-right: 20px; font-weight: bold"
+                    class="btn px-2 py-1"
+                    onclick="updateText('b');"
+                  >
+                    Bold
+                  </a>
+                  <a
+                    style="margin-right: 20px; font-style: italic;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('i');"
+                  >
+                    Italic
+                  </a>
+                  <a
+                    style="margin-right: 20px; font-weight: bold;font-style: italic;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('bi');"
+                  >
+                    Italic Bold
+                  </a>
+                  <a
+                    style="margin-right: 20px;text-decoration: underline;"
+                    class="btn px-2 py-1"
+                    onclick="updateText(null,'underline');"
+                  >
+                    Underline
+                  </a>
+                  <a
+                    style="margin-right: 20px; text-decoration: line-through;"
+                    class="btn px-2 py-1"
+                    onclick="updateText(null,'strike');"
+                  >
+                    Strikethrough
+                  </a>
+                  <a
+                    id="monospace"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('m');"
+                  >
+                  <script>
+                    document.getElementById('monospace').innerHTML = toUnicodeVariant("Monospace", "m")
+                  </script>
+                  </a>
+                  <br><br>
+                  <a
+                    id="script-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('c');"
+                  >
+                  <script>
+                    document.getElementById('script-font').innerHTML = toUnicodeVariant("Script", "c")
+                  </script>
+                  </a>
+
+                  <a
+                    id="script-bold-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('bc');"
+                  >
+                  <script>
+                    document.getElementById('script-bold-font').innerHTML = toUnicodeVariant("Bold Script", "bc")
+                  </script>
+                  </a>
+                  <a
+                  id="gothic-font"
+                  style="margin-right: 20px;"
+                  class="btn px-2 py-1"
+                  onclick="updateText('g');"
+                >
+                <script>
+                  document.getElementById('gothic-font').innerHTML = toUnicodeVariant("Gothic", "g")
+                </script>
+                </a>
+
+                  <a
+                    id="doublestruck-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('d');"
+                  >
+                  <script>
+                    document.getElementById('doublestruck-font').innerHTML = toUnicodeVariant("Doublestruck", "d")
+                  </script>
+                  </a>
+
+
+                  <a
+                    id="circled-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('o');"
+                  >
+                  <script>
+                    document.getElementById('circled-font').innerHTML = toUnicodeVariant("Circled", "o")
+                  </script>
+                  </a>
+
+                  <a
+                    id="circled-negative-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('on');"
+                  >
+                  <script>
+                    document.getElementById('circled-negative-font').innerHTML = toUnicodeVariant("Circled Negative", "on")
+                  </script>
+                  </a>
+
+                  <a
+                    id="squared-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('q');"
+                  >
+                  <script>
+                    document.getElementById('squared-font').innerHTML = toUnicodeVariant("Squared", "q")
+                  </script>
+                  </a>
+
+                  <a
+                    id="squared-negative-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('qn');"
+                  >
+                  <script>
+                    document.getElementById('squared-negative-font').innerHTML = toUnicodeVariant("squared negative", "qn")
+                  </script>
+                  </a>
+
+                  <a
+                    id="paranthesis-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('p');"
+                  >
+                  <script>
+                    document.getElementById('paranthesis-font').innerHTML = toUnicodeVariant("paranthesis", "p")
+                  </script>
+                  </a>
+
+                  <a
+                    id="fullwidth-font"
+                    style="margin-right: 20px;"
+                    class="btn px-2 py-1"
+                    onclick="updateText('w');"
+                  >
+                  <script>
+                    document.getElementById('fullwidth-font').innerHTML = toUnicodeVariant("fullwidth", "w")
+                  </script>
+                  </a>
+
+                  <br><br>
+
+                  <a
+                    style="margin-right: 20px;"
+                    class="btn btn-primary px-2 py-1"
+                    onclick="copyToClipboard();"
+                  >
+                    Copy to clipboard
+                  </a>
+                     </div>
+                  
+                </div>
+              </div>
+              <div class="text-center text-xxl-start">
+                <a href="https://ai.blabigo.com?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001" style="text-decoration:none"><h1 class="display-10 fw-bolder mb-5"><span class="text-gradient d-inline">Discover Blabigo</span></h1></a>
+                <a href="https://ai.blabigo.com?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001" style="text-decoration:none"><div class="fs-3 fw-light text-muted">The all-in-one LinkedIn growth tool</div></a><br><br>
+                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" href="https://app.blabigo.com/signup?utm_source=blabigo&utm_medium=li+post+formatter&utm_campaign=LinkedIn+Post+Formatter&utm_id=001">Start for free</a>
+                    <!--<a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" href="projects.html">Projects</a>-->
+                </div>
+            </div>
+            <br><br>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    
+    <div class="row gx-5 justify-content-center">
+      <div class="col-lg-11 col-xl-9 col-xxl-8">
+          <!-- Experience Section-->
+          <br><br>
+          <div class="fs-3 fw-light text-muted">Frequently Asked Questions</div><br><br>
+          <section>
+              <div class="d-flex justify-content-center align-items-center  mb-4">
+                  <h2 class="text-primary fw-bolder mb-0">Who are we? And what’s Blabigo?</h2>
+              </div>
+              <!-- Experience Card 1-->
+              <div class="card shadow border-0 rounded-4 mb-5">
+                  <div class="card-body p-5">
+                      <div class="row justify-content-center align-items-center gx-5">
+                          <div class="col-lg-8 justify-content-center"><p>We’re the founders of Blabigo, a new LinkedIn tool on the block.<br>Instead of focusing on automation like most tools, we focus on helping you create high performing content. <br>We strongly believe in the power of personal branding and how it can help drive opportunities for your business, and we’ve built our entire tool around this belief. <br><br>We are based out of Munich 🥨 (Germany 🇩🇪).</p></div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+          <section>
+              <div class="d-flex justify-content-center align-items-center  mb-4">
+                  <h2 class="text-primary fw-bolder mb-0">Is this tool free?</h2>
+              </div>
+              <!-- Experience Card 1-->
+              <div class="card shadow border-0 rounded-4 mb-5">
+                  <div class="card-body p-5">
+                      <div class="row justify-content-center align-items-center gx-5">
+                          <div class="col-lg-8 justify-content-center"><p>Yes, our LinkedIn Text Formatter is 100% free, no surprises!.</p></div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <section>
+              <div class="d-flex justify-content-center align-items-center  mb-4">
+                  <h2 class="text-primary fw-bolder mb-0">How does the LinkedIn text formatter work?</h2>
+              </div>
+              <!-- Experience Card 1-->
+              <div class="card shadow border-0 rounded-4 mb-5">
+                  <div class="card-body p-5">
+                      <div class="row justify-content-center align-items-center gx-5">
+                          <div class="col-lg-8 justify-content-center"><p>Easy! Simply write any piece of text you want in the text area, and then select the type of formatting you want to apply to it.
+                            <br><br>
+                            Here are the main formatting styles that are available:
+                            <br><br>
+                            Bold font: apply a bolder font to a part of your LinkedIn post to make it standout<br>
+                            Italic font: use an italic style which can be used to draw attention to a specific word or a quote<br>
+                            Italic bold: combine the italic and bold styles<br>
+                            Underlined text: use the underline style, useful for section titles for example
+                            Strikethrough style: apply a strikethrough effect to your text to make a point about what not to do or to share a price promotion
+                            <br><br>
+                            But there are many more style to play with and apply to your text.
+                            <br><br>
+                            Once you’re done, you can simply press the “Copy to clipboard” button and paste it into your LinkedIn post.
+                          </p></div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <section>
+              <div class="d-flex justify-content-center align-items-center  mb-4">
+                  <h2 class="text-primary fw-bolder mb-0">How many posts can I format for free?</h2>
+              </div>
+              <!-- Experience Card 1-->
+              <div class="card shadow border-0 rounded-4 mb-5">
+                  <div class="card-body p-5">
+                      <div class="row justify-content-center align-items-center gx-5">
+                          <div class="col-lg-8 justify-content-center"><div>As many as you want! No limit, yes NO LIMIT.</div></div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <section>
+              <div class="d-flex justify-content-center align-items-center  mb-4">
+                  <h2 class="text-primary fw-bolder mb-0">What makes up a good LinkedIn Post?</h2>
+              </div>
+              <!-- Experience Card 1-->
+              <div class="card shadow border-0 rounded-4 mb-5">
+                  <div class="card-body p-5">
+                      <div class="row justify-content-center align-items-center gx-5">
+                          <div class="col-lg-8 justify-content-center"><div>
+                            Several elements contribute to a good LinkedIn post, including: <br>
+                            Engaging headline and opening sentence<br>
+                            Clear and concise messaging<br>
+                            Relevant and valuable content for your target audience<br>
+                            Proper use of formatting<br>
+                            Call to action that encourages engagement or invites discussion<br>
+                            Proofreading for grammar and spelling errors<br>
+                            Consistency in posting frequency and style<br>
+                            <br>
+                            Check out Blabigo and our free tools and guides for more help.
+                          </div></div>
+                      </div>
+                  </div>
+              </div>
+          </section>
+          <!-- Divider-->
+          <div class="pb-5"></div>
+
+      </div>
+  </div>
+
+    <!-- Footer-->
+    <footer class="bg-white py-4 mt-auto">
+      <div class="container px-5">
+        <div
+          class="row align-items-center justify-content-between flex-column flex-sm-row"
+        >
+          <div class="col-auto">
+            <div class="small m-0">Copyright &copy; Blabigo 2023</div>
+          </div>
+          <div class="col-auto">
+            <a class="small" href="https://blabigo.com/privacy?utm_source=blabigo&utm_medium=opensource&utm_campaign=LinkedIn+Post+Formatter&utm_id=001"
+              >Privacy policy</a
+            >
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="https://blabigo.com/terms?utm_source=blabigo&utm_medium=opensource&utm_campaign=LinkedIn+Post+Formatter&utm_id=001"
+              >Terms & Conditions</a
+            >
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="https://blabigo.com/impressum?utm_source=blabigo&utm_medium=opensource&utm_campaign=LinkedIn+Post+Formatter&utm_id=001">Impressum</a>
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="https://blog.blabigo.com?utm_source=blabigo&utm_medium=opensource&utm_campaign=LinkedIn+Post+Formatter&utm_id=001">Blog</a>
+            <span class="mx-1">&middot;</span>
+            <a class="small" href="https://app.blabigo.com?utm_source=blabigo&utm_medium=opensource&utm_campaign=LinkedIn+Post+Formatter&utm_id=001">Platform Login</a>
+            <span class="mx-1">&middot;</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
