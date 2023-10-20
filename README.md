@@ -16,9 +16,13 @@ ___
 
 # About Blabigo
 Blabigo is a LinkedIn tool that helps individuals and companies build their Personal Brand on LinkedIn. It helps individuals and companies all around the world to skyrocket their personal brand on LinkedIn organically.
+
 We believe in a world where individuals can make a positive impact on other people's lives. We believe that these days, a personal brand is crucial for success. It can help individuals as well as enterprises to thrive.
+
 We double down on AI to make the process of content ideation and writing as easy as possible, imagine you have a ghostwriter, trained for crafting and creating viral posts all around the clock.
+
 We are a startup based out of Munich (Germany), founded in the summer of 2023, We empower leaders all around the world to help them share their knowledge and expertise with their audiences.
+
 We help knowledgeable people grow their community by automating the most complicated tasks related to online content management while they are creating their personal brand on LinkedIn.
 
 # Why Are we Publishing this Tool for Free
