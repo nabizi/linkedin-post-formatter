@@ -1,6 +1,4 @@
 # LinkedIn Post and Text Formatter
-
-## LinkedIn Post and Text Formatter
 LinkedIn Post and Text Formatter is a free open-source tool that helps you format your LinkedIn content easily.
 
 ## Getting Started
