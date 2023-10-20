@@ -8,7 +8,7 @@ Simply download the zip file, unzip it, and open the index.html file in your bro
 Yes, of course, I have uploaded the tool to [LinkedIn Post Formatter](https://ai.blabigo.com/linkedin-post-formatter?utm_source=github&utm_medium=github+open+source&utm_campaign=LinkedIn+Post+Formatter&utm_id=001)
  feel free to play around with it before you install it on your computer.
 
-This tool partially uses an open source software [toUnicodeVariant](https://github.com/davidkonrad/toUnicodeVariant)
+This tool partially uses an open source software [toUnicodeVariant](https://github.com/davidkonrad/toUnicodeVariant).
 
 ## Contributing
 We welcome contributions to the LinkedIn Post Formatter! Please feel free to submit pull requests, or open issues to discuss potential changes or fixes.
