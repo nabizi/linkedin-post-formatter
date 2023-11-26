@@ -32,10 +32,10 @@ Blabigo is also a free-to-use solution. With the free version, you can use AI to
 
 ## How can I build my personal Brand?
 If you are determined to build your personal Brand on LinkedIn, Blabigo offers a suite of tools that can help you achieve that. We also publish articles on a regular basis that explain how to build your personal brand in more detail.
-You can access our Blog via this link: [Blabigo Blog](https://blog.blabigo.com/linkedin-post-formatter?utm_source=github&utm_medium=github+open+source&utm_campaign=LinkedIn+Post+Formatter&utm_id=001)
+You can access our Blog via this link: [Blabigo Blog](https://blog.blabigo.com?utm_source=github&utm_medium=github+open+source&utm_campaign=LinkedIn+Post+Formatter&utm_id=001)
 
 ## How can you reach out?
-If you have any inquiries or want to have any clarification about this tool, please drop us an email: contact@blabigo.com
+If you have any inquiries or want to have any clarification about this tool, please drop us an email: at contact@blabigo.com
 
 ## [Here are 10 reasons to build your Personal Brand:](https://blog.blabigo.com/why-does-optimizing-my-linkedin-profile-truly-matter)
 
